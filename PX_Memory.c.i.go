@@ -2,13 +2,13 @@ package memory
 
 import unsafe "unsafe"
 
-func PX_MemoryInitialize(mp *Struct__memoryPool, memory *Struct___PX_memroy) {
+func PX_MemoryInitialize(mp *_memoryPool, memory *_memroy) {
 	memory.buffer = (*uint8)(nil)
 	memory.allocsize = int32(0)
 	memory.usedsize = int32(0)
 	memory.mp = mp
 }
-func PX_MemoryCat(memory *Struct___PX_memroy, buffer unsafe.Pointer, size int32) int32 {
+func PX_MemoryCat(memory *_memroy, buffer unsafe.Pointer, size int32) int32 {
 	var old *uint8
 	var length int32
 	var shl int32
@@ -43,7 +43,7 @@ func PX_MemoryCat(memory *Struct___PX_memroy, buffer unsafe.Pointer, size int32)
 	memory.usedsize += size
 	return int32(1)
 }
-func PX_MemoryFree(memory *Struct___PX_memroy) {
+func PX_MemoryFree(memory *_memroy) {
 	if memory.allocsize == int32(0) || uintptr(unsafe.Pointer(memory.buffer)) == uintptr(unsafe.Pointer(nil)) {
 		return
 	}
@@ -52,10 +52,10 @@ func PX_MemoryFree(memory *Struct___PX_memroy) {
 	memory.usedsize = int32(0)
 	memory.allocsize = int32(0)
 }
-func PX_MemoryData(memory *Struct___PX_memroy) *uint8 {
+func PX_MemoryData(memory *_memroy) *uint8 {
 	return memory.buffer
 }
-func PX_MemoryAlloc(memory *Struct___PX_memroy, size int32) int32 {
+func PX_MemoryAlloc(memory *_memroy, size int32) int32 {
 	PX_MemoryFree(memory)
 	memory.allocsize = size
 	memory.usedsize = int32(0)
@@ -77,10 +77,10 @@ func PX_MemoryAlloc(memory *Struct___PX_memroy, size int32) int32 {
 	}
 	return 0
 }
-func PX_MemoryResize(memory *Struct___PX_memroy, size int32) int32 {
+func PX_MemoryResize(memory *_memroy, size int32) int32 {
 	return PX_MemoryAlloc(memory, size)
 }
-func PX_MemoryFind(memory *Struct___PX_memroy, buffer unsafe.Pointer, size int32) *uint8 {
+func PX_MemoryFind(memory *_memroy, buffer unsafe.Pointer, size int32) *uint8 {
 	var offest int32
 	if memory.usedsize < size {
 		return (*uint8)(nil)
@@ -92,7 +92,7 @@ func PX_MemoryFind(memory *Struct___PX_memroy, buffer unsafe.Pointer, size int32
 	}
 	return (*uint8)(nil)
 }
-func PX_MemoryRemove(memory *Struct___PX_memroy, start int32, end int32) {
+func PX_MemoryRemove(memory *_memroy, start int32, end int32) {
 	if start > end {
 		var t int32 = end
 		end = start
@@ -109,10 +109,10 @@ func PX_MemoryRemove(memory *Struct___PX_memroy, start int32, end int32) {
 	PX_memcpy(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer(memory.buffer))+uintptr(start)))), unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer(memory.buffer))+uintptr(end)))))+uintptr(int32(1))))), memory.usedsize-end-int32(1))
 	memory.usedsize += start - end - int32(1)
 }
-func PX_MemoryClear(memory *Struct___PX_memroy) {
+func PX_MemoryClear(memory *_memroy) {
 	memory.usedsize = int32(0)
 }
-func PX_MemoryCopy(memory *Struct___PX_memroy, buffer unsafe.Pointer, startoffset int32, size int32) int32 {
+func PX_MemoryCopy(memory *_memroy, buffer unsafe.Pointer, startoffset int32, size int32) int32 {
 	var old *uint8
 	var length int32
 	var shl int32
@@ -148,7 +148,7 @@ func PX_MemoryCopy(memory *Struct___PX_memroy, buffer unsafe.Pointer, startoffse
 	}
 	return int32(1)
 }
-func PX_CircularBufferInitialize(mp *Struct__memoryPool, pcbuffer *_cgoa_10_PX_Memory, size int32) int32 {
+func PX_CircularBufferInitialize(mp *_memoryPool, pcbuffer *_px_circularBuffer, size int32) int32 {
 	PX_memset(unsafe.Pointer(pcbuffer), uint8(0), int32(24))
 	if size == int32(0) {
 		PX_ASSERT()
@@ -163,50 +163,50 @@ func PX_CircularBufferInitialize(mp *Struct__memoryPool, pcbuffer *_cgoa_10_PX_M
 	pcbuffer.size = size
 	return int32(1)
 }
-func PX_CircularBufferPush(pcbuffer *_cgoa_10_PX_Memory, v float64) {
+func PX_CircularBufferPush(pcbuffer *_px_circularBuffer, v float64) {
 	pcbuffer.pointer--
 	if pcbuffer.pointer < int32(0) {
 		pcbuffer.pointer = pcbuffer.size - int32(1)
 	}
 	*(*float64)(unsafe.Pointer(uintptr(unsafe.Pointer(pcbuffer.buffer)) + uintptr(pcbuffer.pointer)*8)) = v
 }
-func PX_CircularBufferAdd(pcbuffer *_cgoa_10_PX_Memory, pos int32, v float64) {
+func PX_CircularBufferAdd(pcbuffer *_px_circularBuffer, pos int32, v float64) {
 	pos = pos % pcbuffer.size
 	if pos < int32(0) {
 		pos += pcbuffer.size
 	}
 	*(*float64)(unsafe.Pointer(uintptr(unsafe.Pointer(pcbuffer.buffer)) + uintptr(pos)*8)) += v
 }
-func PX_CircularBufferSet(pcbuffer *_cgoa_10_PX_Memory, pos int32, v float64) {
+func PX_CircularBufferSet(pcbuffer *_px_circularBuffer, pos int32, v float64) {
 	pos = pos % pcbuffer.size
 	if pos < int32(0) {
 		pos += pcbuffer.size
 	}
 	*(*float64)(unsafe.Pointer(uintptr(unsafe.Pointer(pcbuffer.buffer)) + uintptr(pos)*8)) = v
 }
-func PX_CircularBufferGet(pcbuffer *_cgoa_10_PX_Memory, pos int32) float64 {
+func PX_CircularBufferGet(pcbuffer *_px_circularBuffer, pos int32) float64 {
 	pos = pos % pcbuffer.size
 	if pos < int32(0) {
 		pos += pcbuffer.size
 	}
 	return *(*float64)(unsafe.Pointer(uintptr(unsafe.Pointer(pcbuffer.buffer)) + uintptr(pos)*8))
 }
-func PX_CircularBufferZeroClear(pcbuffer *_cgoa_10_PX_Memory) {
+func PX_CircularBufferZeroClear(pcbuffer *_px_circularBuffer) {
 	PX_memset(unsafe.Pointer(pcbuffer.buffer), uint8(0), int32(8*uint64(pcbuffer.size)))
 }
-func PX_CircularBufferFree(pcbuffer *_cgoa_10_PX_Memory) {
+func PX_CircularBufferFree(pcbuffer *_px_circularBuffer) {
 	if pcbuffer.mp != nil {
 		MP_Free(pcbuffer.mp, unsafe.Pointer(pcbuffer.buffer))
 		PX_memset(unsafe.Pointer(pcbuffer), uint8(0), int32(24))
 	}
 }
-func PX_CircularBufferDelay(pcbuffer *_cgoa_10_PX_Memory, pos int32) float64 {
+func PX_CircularBufferDelay(pcbuffer *_px_circularBuffer, pos int32) float64 {
 	return *(*float64)(unsafe.Pointer(uintptr(unsafe.Pointer(pcbuffer.buffer)) + uintptr((pcbuffer.pointer+pos)%pcbuffer.size)*8))
 }
-func PX_FifoBufferInitialize(mp *Struct__memoryPool, pfifo *Struct___PX_memroy) {
+func PX_FifoBufferInitialize(mp *_memoryPool, pfifo *_memroy) {
 	PX_MemoryInitialize(mp, pfifo)
 }
-func PX_FifoBufferPop(pfifo *Struct___PX_memroy, data unsafe.Pointer, size int32) int32 {
+func PX_FifoBufferPop(pfifo *_memroy, data unsafe.Pointer, size int32) int32 {
 	if pfifo.usedsize != 0 {
 		var rsize int32 = *(*int32)(unsafe.Pointer(pfifo.buffer))
 		if rsize > pfifo.usedsize-int32(4) {
@@ -222,7 +222,7 @@ func PX_FifoBufferPop(pfifo *Struct___PX_memroy, data unsafe.Pointer, size int32
 	}
 	return int32(0)
 }
-func PX_FifoBufferPush(pfifo *Struct___PX_memroy, data unsafe.Pointer, size int32) int32 {
+func PX_FifoBufferPush(pfifo *_memroy, data unsafe.Pointer, size int32) int32 {
 	var wsize int32 = size
 	if wsize < int32(0) {
 		PX_ASSERT()
@@ -237,19 +237,19 @@ func PX_FifoBufferPush(pfifo *Struct___PX_memroy, data unsafe.Pointer, size int3
 	}
 	return int32(0)
 }
-func PX_FifoBufferGetPopSize(pfifo *Struct___PX_memroy) int32 {
+func PX_FifoBufferGetPopSize(pfifo *_memroy) int32 {
 	if uint64(pfifo.usedsize) > 4 {
 		return *(*int32)(unsafe.Pointer(pfifo.buffer))
 	}
 	return int32(0)
 }
-func PX_FifoBufferFree(pfifo *Struct___PX_memroy) {
+func PX_FifoBufferFree(pfifo *_memroy) {
 	PX_MemoryFree(pfifo)
 }
-func PX_StackInitialize(mp *Struct__memoryPool, pstack *Struct___PX_memroy) {
+func PX_StackInitialize(mp *_memoryPool, pstack *_memroy) {
 	PX_MemoryInitialize(mp, pstack)
 }
-func PX_StackPop(pstack *Struct___PX_memroy, data unsafe.Pointer, size int32) int32 {
+func PX_StackPop(pstack *_memroy, data unsafe.Pointer, size int32) int32 {
 	if uint64(pstack.usedsize) > 4 {
 		var rsize int32 = *(*int32)(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer(pstack.buffer))+uintptr(pstack.usedsize))))) - uintptr(4)))))
 		if rsize > pstack.usedsize-int32(4) {
@@ -265,7 +265,7 @@ func PX_StackPop(pstack *Struct___PX_memroy, data unsafe.Pointer, size int32) in
 	}
 	return int32(0)
 }
-func PX_StackPush(pstack *Struct___PX_memroy, data unsafe.Pointer, size int32) int32 {
+func PX_StackPush(pstack *_memroy, data unsafe.Pointer, size int32) int32 {
 	var wsize int32 = size
 	if wsize < int32(0) {
 		PX_ASSERT()
@@ -280,9 +280,9 @@ func PX_StackPush(pstack *Struct___PX_memroy, data unsafe.Pointer, size int32) i
 	}
 	return int32(0)
 }
-func PX_StackGetPopSize(pstack *Struct___PX_memroy) int32 {
+func PX_StackGetPopSize(pstack *_memroy) int32 {
 	return *(*int32)(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer(pstack.buffer))+uintptr(pstack.usedsize))))) - uintptr(4)))))
 }
-func PX_StackFree(pstack *Struct___PX_memroy) {
+func PX_StackFree(pstack *_memroy) {
 	PX_MemoryFree(pstack)
 }

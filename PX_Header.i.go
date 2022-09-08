@@ -2,7 +2,7 @@ package memory
 
 import unsafe "unsafe"
 
-var _cgos_px_hex_to_dex_table_PX_Typedef [103]int32 = [103]int32{int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(1), int32(2), int32(3), int32(4), int32(5), int32(6), int32(7), int32(8), int32(9), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(10), int32(11), int32(12), int32(13), int32(14), int32(15), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(10), int32(11), int32(12), int32(13), int32(14), int32(15)}
+var _px_hex_to_dex_table [103]int32 = [103]int32{int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(1), int32(2), int32(3), int32(4), int32(5), int32(6), int32(7), int32(8), int32(9), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(10), int32(11), int32(12), int32(13), int32(14), int32(15), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(0), int32(10), int32(11), int32(12), int32(13), int32(14), int32(15)}
 
 type PX_bool = int32
 type PX_dword = uint32
@@ -28,32 +28,32 @@ type PX_qword = uint64
 type PX_uint64 = uint64
 type PX_int64 = int64
 
-type _cgoa_1_PX_Typedef struct {
+type _px_return_string struct {
 	data [64]int8
 }
-type PX_RETURN_STRING = _cgoa_1_PX_Typedef
+type PX_RETURN_STRING = _px_return_string
 
 type PX_STRINGFORMAT_TYPE = int32
 
-type _cgoa_9_PX_Typedef struct {
+type _inner_px_stringformat struct {
 	_pstring *int8
 }
-type _cgoa_8_PX_Typedef struct {
+type _px_stringformat struct {
 	type_ int32
-	_cgoa_9_PX_Typedef
+	_inner_px_stringformat
 }
-type PX_stringformat = _cgoa_8_PX_Typedef
-
-const (
-	PX_MEMORYPOOL_ERROR_OUTOFMEMORY     int32 = 0
-	PX_MEMORYPOOL_ERROR_INVALID_ACCESS  int32 = 1
-	PX_MEMORYPOOL_ERROR_INVALID_ADDRESS int32 = 2
-)
+type PX_stringformat = _px_stringformat
 
 type PX_MEMORYPOOL_ERROR = int32
-type PX_MP_ErrorCall = func(int32)
+const (
+	PX_MEMORYPOOL_ERROR_OUTOFMEMORY     PX_MEMORYPOOL_ERROR = 0
+	PX_MEMORYPOOL_ERROR_INVALID_ACCESS  PX_MEMORYPOOL_ERROR = 1
+	PX_MEMORYPOOL_ERROR_INVALID_ADDRESS PX_MEMORYPOOL_ERROR = 2
+)
 
-type Struct__memoryPool struct {
+type PX_MP_ErrorCall = func(PX_MEMORYPOOL_ERROR)
+
+type _memoryPool struct {
 	AllocAddr         unsafe.Pointer
 	StartAddr         unsafe.Pointer
 	EndAddr           unsafe.Pointer
@@ -64,22 +64,22 @@ type Struct__memoryPool struct {
 	MaxMemoryfragSize uint32
 	ErrorCall_Ptr     func(int32)
 }
-type PX_memorypool = Struct__memoryPool
+type PX_memorypool = _memoryPool
 
-type Struct___PX_memroy struct {
+type _memroy struct {
 	buffer    *uint8
-	mp        *Struct__memoryPool
+	mp        *_memoryPool
 	usedsize  int32
 	allocsize int32
 }
-type PX_memory = Struct___PX_memroy
-type PX_fifobuffer = Struct___PX_memroy
-type PX_stack = Struct___PX_memroy
+type PX_memory = _memroy
+type PX_fifobuffer = _memroy
+type PX_stack = _memroy
 
-type _cgoa_10_PX_Memory struct {
-	mp      *Struct__memoryPool
+type _px_circularBuffer struct {
+	mp      *_memoryPool
 	buffer  *float64
 	size    int32
 	pointer int32
 }
-type PX_CircularBuffer = _cgoa_10_PX_Memory
+type PX_CircularBuffer = _px_circularBuffer

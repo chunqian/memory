@@ -29,7 +29,7 @@ func PX_htoi(hex_str *int8) uint32 {
 		}()
 		return *_cgo_addr
 	}()) != int32(0) {
-		iret = iret<<int32(4) | uint32(*(*int32)(unsafe.Pointer(uintptr(unsafe.Pointer((*int32)(unsafe.Pointer(&_cgos_px_hex_to_dex_table_PX_Typedef)))) + uintptr(ch)*4)))
+		iret = iret<<int32(4) | uint32(*(*int32)(unsafe.Pointer(uintptr(unsafe.Pointer((*int32)(unsafe.Pointer(&_px_hex_to_dex_table)))) + uintptr(ch)*4)))
 	}
 	return iret
 }
@@ -107,13 +107,13 @@ func PX_atof(fstr *int8) float32 {
 	}
 	return 0
 }
-func PX_ftos(f float32, precision int32) _cgoa_1_PX_Typedef {
-	var str _cgoa_1_PX_Typedef
+func PX_ftos(f float32, precision int32) _px_return_string {
+	var str _px_return_string
 	PX_ftoa(f, (*int8)(unsafe.Pointer(&str.data)), int32(64), precision)
 	return str
 }
-func PX_itos(num int32, radix int32) _cgoa_1_PX_Typedef {
-	var str _cgoa_1_PX_Typedef
+func PX_itos(num int32, radix int32) _px_return_string {
+	var str _px_return_string
 	PX_itoa(num, (*int8)(unsafe.Pointer(&str.data)), int32(64), radix)
 	return str
 }
@@ -298,29 +298,29 @@ func PX_HexStringToBuffer(hex_str *int8, data *uint8) int32 {
 	}
 	return i
 }
-func PX_STRINGFORMAT_INT(_i int32) _cgoa_8_PX_Typedef {
-	var fmt _cgoa_8_PX_Typedef
+func PX_STRINGFORMAT_INT(_i int32) _px_stringformat {
+	var fmt _px_stringformat
 	fmt.type_ = int32(0)
-	*(*int32)(unsafe.Pointer(&fmt._cgoa_9_PX_Typedef)) = _i
+	*(*int32)(unsafe.Pointer(&fmt._inner_px_stringformat)) = _i
 	return fmt
 }
-func PX_STRINGFORMAT_FLOAT(_f float32) _cgoa_8_PX_Typedef {
-	var fmt _cgoa_8_PX_Typedef
+func PX_STRINGFORMAT_FLOAT(_f float32) _px_stringformat {
+	var fmt _px_stringformat
 	fmt.type_ = int32(1)
-	*(*float32)(unsafe.Pointer(&fmt._cgoa_9_PX_Typedef)) = _f
+	*(*float32)(unsafe.Pointer(&fmt._inner_px_stringformat)) = _f
 	return fmt
 }
-func PX_STRINGFORMAT_STRING(_s *int8) _cgoa_8_PX_Typedef {
-	var fmt _cgoa_8_PX_Typedef
+func PX_STRINGFORMAT_STRING(_s *int8) _px_stringformat {
+	var fmt _px_stringformat
 	fmt.type_ = int32(2)
 	fmt._pstring = _s
 	return fmt
 }
-func PX_sprintf8(_out_str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typedef, _2 _cgoa_8_PX_Typedef, _3 _cgoa_8_PX_Typedef, _4 _cgoa_8_PX_Typedef, _5 _cgoa_8_PX_Typedef, _6 _cgoa_8_PX_Typedef, _7 _cgoa_8_PX_Typedef, _8 _cgoa_8_PX_Typedef) int32 {
+func PX_sprintf8(_out_str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat, _4 _px_stringformat, _5 _px_stringformat, _6 _px_stringformat, _7 _px_stringformat, _8 _px_stringformat) int32 {
 	var length int32 = int32(0)
 	var p *int8 = nil
-	var tret _cgoa_1_PX_Typedef
-	var pstringfmt _cgoa_8_PX_Typedef
+	var tret _px_return_string
+	var pstringfmt _px_stringformat
 	var precision int32 = int32(3)
 	if !(_out_str != nil) || !(str_size != 0) {
 		for p = fmt; *p != 0; *(*uintptr)(unsafe.Pointer(&p))++ {
@@ -365,11 +365,11 @@ func PX_sprintf8(_out_str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typede
 			}
 			switch uint32(pstringfmt.type_) {
 			case uint32(0):
-				tret = PX_itos(*(*int32)(unsafe.Pointer(&pstringfmt._cgoa_9_PX_Typedef)), int32(10))
+				tret = PX_itos(*(*int32)(unsafe.Pointer(&pstringfmt._inner_px_stringformat)), int32(10))
 				length += PX_strlen((*int8)(unsafe.Pointer(&(&tret).data)))
 				break
 			case uint32(1):
-				tret = PX_ftos(*(*float32)(unsafe.Pointer(&pstringfmt._cgoa_9_PX_Typedef)), precision)
+				tret = PX_ftos(*(*float32)(unsafe.Pointer(&pstringfmt._inner_px_stringformat)), precision)
 				length += PX_strlen((*int8)(unsafe.Pointer(&(&tret).data)))
 				break
 			case uint32(2):
@@ -432,7 +432,7 @@ func PX_sprintf8(_out_str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typede
 		}
 		switch uint32(pstringfmt.type_) {
 		case uint32(0):
-			tret = PX_itos(*(*int32)(unsafe.Pointer(&pstringfmt._cgoa_9_PX_Typedef)), int32(10))
+			tret = PX_itos(*(*int32)(unsafe.Pointer(&pstringfmt._inner_px_stringformat)), int32(10))
 			if length+PX_strlen((*int8)(unsafe.Pointer(&tret.data))) < str_size {
 				PX_strcat(_out_str, (*int8)(unsafe.Pointer(&tret.data)))
 				length += PX_strlen((*int8)(unsafe.Pointer(&tret.data)))
@@ -441,7 +441,7 @@ func PX_sprintf8(_out_str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typede
 			}
 			break
 		case uint32(1):
-			tret = PX_ftos(*(*float32)(unsafe.Pointer(&pstringfmt._cgoa_9_PX_Typedef)), precision)
+			tret = PX_ftos(*(*float32)(unsafe.Pointer(&pstringfmt._inner_px_stringformat)), precision)
 			if length+PX_strlen((*int8)(unsafe.Pointer(&tret.data))) < str_size {
 				PX_strcat(_out_str, (*int8)(unsafe.Pointer(&tret.data)))
 				length += PX_strlen((*int8)(unsafe.Pointer(&tret.data)))
@@ -466,25 +466,25 @@ func PX_sprintf8(_out_str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typede
 	}
 	return length
 }
-func PX_sprintf7(str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typedef, _2 _cgoa_8_PX_Typedef, _3 _cgoa_8_PX_Typedef, _4 _cgoa_8_PX_Typedef, _5 _cgoa_8_PX_Typedef, _6 _cgoa_8_PX_Typedef, _7 _cgoa_8_PX_Typedef) int32 {
+func PX_sprintf7(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat, _4 _px_stringformat, _5 _px_stringformat, _6 _px_stringformat, _7 _px_stringformat) int32 {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, _3, _4, _5, _6, _7, PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf6(str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typedef, _2 _cgoa_8_PX_Typedef, _3 _cgoa_8_PX_Typedef, _4 _cgoa_8_PX_Typedef, _5 _cgoa_8_PX_Typedef, _6 _cgoa_8_PX_Typedef) int32 {
+func PX_sprintf6(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat, _4 _px_stringformat, _5 _px_stringformat, _6 _px_stringformat) int32 {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, _3, _4, _5, _6, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf5(str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typedef, _2 _cgoa_8_PX_Typedef, _3 _cgoa_8_PX_Typedef, _4 _cgoa_8_PX_Typedef, _5 _cgoa_8_PX_Typedef) int32 {
+func PX_sprintf5(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat, _4 _px_stringformat, _5 _px_stringformat) int32 {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, _3, _4, _5, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf4(str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typedef, _2 _cgoa_8_PX_Typedef, _3 _cgoa_8_PX_Typedef, _4 _cgoa_8_PX_Typedef) int32 {
+func PX_sprintf4(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat, _4 _px_stringformat) int32 {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, _3, _4, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf3(str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typedef, _2 _cgoa_8_PX_Typedef, _3 _cgoa_8_PX_Typedef) int32 {
+func PX_sprintf3(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat) int32 {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, _3, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf2(str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typedef, _2 _cgoa_8_PX_Typedef) int32 {
+func PX_sprintf2(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat) int32 {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf1(str *int8, str_size int32, fmt *int8, _1 _cgoa_8_PX_Typedef) int32 {
+func PX_sprintf1(str *int8, str_size int32, fmt *int8, _1 _px_stringformat) int32 {
 	return PX_sprintf8(str, str_size, fmt, _1, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
 func PX_sprintf0(str *int8, str_size int32, fmt *int8) int32 {
