@@ -29,17 +29,24 @@ type PX_uint64 = uint64
 type PX_int64 = int64
 
 type _px_return_string struct {
-	data [64]int8
+	data [64]PX_char
 }
 type PX_RETURN_STRING = _px_return_string
 
 type PX_STRINGFORMAT_TYPE = int32
+const (
+	PX_STRINGFORMAT_TYPE_INT     PX_STRINGFORMAT_TYPE = 0
+	PX_STRINGFORMAT_TYPE_FLOAT  PX_STRINGFORMAT_TYPE = 1
+	PX_STRINGFORMAT_TYPE_STRING PX_STRINGFORMAT_TYPE = 2
+)
 
 type _inner_px_stringformat struct {
-	_pstring *int8
+	_int PX_int
+	_float PX_float
+	_pstring *PX_char
 }
 type _px_stringformat struct {
-	type_ int32
+	type_ PX_STRINGFORMAT_TYPE
 	_inner_px_stringformat
 }
 type PX_stringformat = _px_stringformat
@@ -57,29 +64,29 @@ type _memoryPool struct {
 	AllocAddr         unsafe.Pointer
 	StartAddr         unsafe.Pointer
 	EndAddr           unsafe.Pointer
-	Size              uint32
-	FreeSize          uint32
-	nodeCount         uint32
-	FreeTableCount    uint32
-	MaxMemoryfragSize uint32
-	ErrorCall_Ptr     func(int32)
+	Size              PX_uint32
+	FreeSize          PX_uint32
+	nodeCount         PX_uint32
+	FreeTableCount    PX_uint32
+	MaxMemoryfragSize PX_uint32
+	ErrorCall_Ptr     func(PX_MEMORYPOOL_ERROR)
 }
 type PX_memorypool = _memoryPool
 
-type _memroy struct {
-	buffer    *uint8
+type _memory struct {
+	buffer    *PX_byte
 	mp        *_memoryPool
-	usedsize  int32
-	allocsize int32
+	usedsize  PX_int
+	allocsize PX_int
 }
-type PX_memory = _memroy
-type PX_fifobuffer = _memroy
-type PX_stack = _memroy
+type PX_memory = _memory
+type PX_fifobuffer = _memory
+type PX_stack = _memory
 
 type _px_circularBuffer struct {
 	mp      *_memoryPool
-	buffer  *float64
-	size    int32
-	pointer int32
+	buffer  *PX_double
+	size    PX_int
+	pointer PX_int
 }
-type PX_CircularBuffer = _px_circularBuffer
+type PX_circularBuffer = _px_circularBuffer

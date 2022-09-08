@@ -2,7 +2,7 @@ package memory
 
 import unsafe "unsafe"
 
-func _cgos_PX_isBigEndianCPU_PX_Typedef() int32 {
+func _cgos_PX_isBigEndianCPU_PX_Typedef() PX_bool {
 	type _cgoa_14_PX_Typedef struct {
 		i uint32
 	}
@@ -16,7 +16,7 @@ func _cgos_PX_isBigEndianCPU_PX_Typedef() int32 {
 		}
 	}()
 }
-func PX_htoi(hex_str *int8) uint32 {
+func PX_htoi(hex_str *PX_char) PX_uint {
 	var ch int8
 	var iret uint32 = uint32(0)
 	for int32(func() (_cgo_ret int8) {
@@ -33,7 +33,7 @@ func PX_htoi(hex_str *int8) uint32 {
 	}
 	return iret
 }
-func PX_atoi(s *int8) int32 {
+func PX_atoi(s *PX_char) PX_int {
 	var i int32
 	var n int32
 	var sign int32 = int32(1)
@@ -54,7 +54,7 @@ func PX_atoi(s *int8) int32 {
 	}
 	return sign * n
 }
-func PX_atof(fstr *int8) float32 {
+func PX_atof(fstr *PX_char) PX_float {
 	var temp float64 = float64(int32(10))
 	var ispnum int32 = int32(1)
 	var ans float64 = float64(int32(0))
@@ -107,17 +107,17 @@ func PX_atof(fstr *int8) float32 {
 	}
 	return 0
 }
-func PX_ftos(f float32, precision int32) _px_return_string {
+func PX_ftos(f PX_float, precision PX_int) PX_RETURN_STRING {
 	var str _px_return_string
 	PX_ftoa(f, (*int8)(unsafe.Pointer(&str.data)), int32(64), precision)
 	return str
 }
-func PX_itos(num int32, radix int32) _px_return_string {
+func PX_itos(num PX_int, radix PX_int) PX_RETURN_STRING {
 	var str _px_return_string
 	PX_itoa(num, (*int8)(unsafe.Pointer(&str.data)), int32(64), radix)
 	return str
 }
-func PX_AscToWord(asc *int8, u16 *uint16) {
+func PX_AscToWord(asc *PX_char, u16 *PX_word) {
 	for *asc != 0 {
 		*u16 = uint16(*asc)
 		*(*uintptr)(unsafe.Pointer(&u16)) += 2
@@ -125,7 +125,7 @@ func PX_AscToWord(asc *int8, u16 *uint16) {
 	}
 	*u16 = uint16(0)
 }
-func PX_ftoa(f float32, outbuf *int8, maxlen int32, precision int32) int32 {
+func PX_ftoa(f PX_float, outbuf *PX_char, maxlen PX_int, precision PX_int) PX_int {
 	var i_value int32
 	var f_value int32
 	var shl int32 = int32(10)
@@ -175,7 +175,7 @@ func PX_ftoa(f float32, outbuf *int8, maxlen int32, precision int32) int32 {
 	len += PX_strlen((*int8)(unsafe.Pointer(uintptr(unsafe.Pointer(outbuf)) + uintptr(len))))
 	return len
 }
-func PX_itoa(num int32, str *int8, MaxStrSize int32, radix int32) int32 {
+func PX_itoa(num PX_int, str *PX_char, MaxStrSize PX_int, radix PX_int) PX_int {
 	var index [37]int8 = [37]int8{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '\x00'}
 	var unum uint32
 	var temp int8
@@ -259,11 +259,11 @@ func PX_itoa(num int32, str *int8, MaxStrSize int32, radix int32) int32 {
 	}
 	return l
 }
-func PX_SwapEndian(val uint32) uint32 {
+func PX_SwapEndian(val PX_dword) PX_dword {
 	val = val<<int32(8)&uint32(4278255360) | val>>int32(8)&uint32(16711935)
 	return val<<int32(16) | val>>int32(16)
 }
-func PX_BufferToHexString(data *uint8, size int32, hex_str *int8) {
+func PX_BufferToHexString(data *PX_byte, size PX_int, hex_str *PX_char) {
 	var i int32
 	*(*int8)(unsafe.Pointer(uintptr(unsafe.Pointer(hex_str)) + uintptr(int32(0)))) = int8(0)
 	for i = int32(0); i < size; i++ {
@@ -278,7 +278,7 @@ func PX_BufferToHexString(data *uint8, size int32, hex_str *int8) {
 	}
 	*(*int8)(unsafe.Pointer(uintptr(unsafe.Pointer(hex_str)) + uintptr(i*int32(2)))) = int8(0)
 }
-func PX_HexStringToBuffer(hex_str *int8, data *uint8) int32 {
+func PX_HexStringToBuffer(hex_str *PX_char, data *PX_byte) PX_int {
 	var i int32 = int32(0)
 	var hex [3]int8 = [3]int8{int8(0)}
 	if PX_strlen(hex_str)&int32(1) != 0 {
@@ -298,25 +298,25 @@ func PX_HexStringToBuffer(hex_str *int8, data *uint8) int32 {
 	}
 	return i
 }
-func PX_STRINGFORMAT_INT(_i int32) _px_stringformat {
+func PX_STRINGFORMAT_INT(_i PX_int) PX_stringformat {
 	var fmt _px_stringformat
 	fmt.type_ = int32(0)
 	*(*int32)(unsafe.Pointer(&fmt._inner_px_stringformat)) = _i
 	return fmt
 }
-func PX_STRINGFORMAT_FLOAT(_f float32) _px_stringformat {
+func PX_STRINGFORMAT_FLOAT(_f PX_float) PX_stringformat {
 	var fmt _px_stringformat
 	fmt.type_ = int32(1)
 	*(*float32)(unsafe.Pointer(&fmt._inner_px_stringformat)) = _f
 	return fmt
 }
-func PX_STRINGFORMAT_STRING(_s *int8) _px_stringformat {
+func PX_STRINGFORMAT_STRING(_s *PX_char) PX_stringformat {
 	var fmt _px_stringformat
 	fmt.type_ = int32(2)
 	fmt._pstring = _s
 	return fmt
 }
-func PX_sprintf8(_out_str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat, _4 _px_stringformat, _5 _px_stringformat, _6 _px_stringformat, _7 _px_stringformat, _8 _px_stringformat) int32 {
+func PX_sprintf8(_out_str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringformat, _2 PX_stringformat, _3 PX_stringformat, _4 PX_stringformat, _5 PX_stringformat, _6 PX_stringformat, _7 PX_stringformat, _8 PX_stringformat) PX_int {
 	var length int32 = int32(0)
 	var p *int8 = nil
 	var tret _px_return_string
@@ -466,31 +466,31 @@ func PX_sprintf8(_out_str *int8, str_size int32, fmt *int8, _1 _px_stringformat,
 	}
 	return length
 }
-func PX_sprintf7(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat, _4 _px_stringformat, _5 _px_stringformat, _6 _px_stringformat, _7 _px_stringformat) int32 {
+func PX_sprintf7(str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringformat, _2 PX_stringformat, _3 PX_stringformat, _4 PX_stringformat, _5 PX_stringformat, _6 PX_stringformat, _7 PX_stringformat) PX_int {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, _3, _4, _5, _6, _7, PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf6(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat, _4 _px_stringformat, _5 _px_stringformat, _6 _px_stringformat) int32 {
+func PX_sprintf6(str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringformat, _2 PX_stringformat, _3 PX_stringformat, _4 PX_stringformat, _5 PX_stringformat, _6 PX_stringformat) PX_int {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, _3, _4, _5, _6, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf5(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat, _4 _px_stringformat, _5 _px_stringformat) int32 {
+func PX_sprintf5(str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringformat, _2 PX_stringformat, _3 PX_stringformat, _4 PX_stringformat, _5 PX_stringformat) PX_int {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, _3, _4, _5, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf4(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat, _4 _px_stringformat) int32 {
+func PX_sprintf4(str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringformat, _2 PX_stringformat, _3 PX_stringformat, _4 PX_stringformat) PX_int {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, _3, _4, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf3(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat, _3 _px_stringformat) int32 {
+func PX_sprintf3(str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringformat, _2 PX_stringformat, _3 PX_stringformat) PX_int {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, _3, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf2(str *int8, str_size int32, fmt *int8, _1 _px_stringformat, _2 _px_stringformat) int32 {
+func PX_sprintf2(str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringformat, _2 PX_stringformat) PX_int {
 	return PX_sprintf8(str, str_size, fmt, _1, _2, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf1(str *int8, str_size int32, fmt *int8, _1 _px_stringformat) int32 {
+func PX_sprintf1(str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringformat) PX_int {
 	return PX_sprintf8(str, str_size, fmt, _1, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_sprintf0(str *int8, str_size int32, fmt *int8) int32 {
+func PX_sprintf0(str *PX_char, str_size PX_int, fmt *PX_char) PX_int {
 	return PX_sprintf8(str, str_size, fmt, PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)), PX_STRINGFORMAT_INT(int32(0)))
 }
-func PX_memset(dst unsafe.Pointer, byte uint8, size int32) {
+func PX_memset(dst unsafe.Pointer, byte PX_byte, size PX_int) {
 	var dw uint32 = uint32(func() int32 {
 		if int32(byte) != 0 {
 			return int32(byte)<<int32(24) | int32(byte)<<int32(16) | int32(byte)<<int32(8) | int32(byte)
@@ -529,7 +529,7 @@ func PX_memset(dst unsafe.Pointer, byte uint8, size int32) {
 		}() = byte
 	}
 }
-func PX_memdwordset(dst unsafe.Pointer, dw uint32, count int32) {
+func PX_memdwordset(dst unsafe.Pointer, dw PX_dword, count PX_int) {
 	var p *uint32 = (*uint32)(dst)
 	for func() (_cgo_ret int32) {
 		_cgo_addr := &count
@@ -545,7 +545,7 @@ func PX_memdwordset(dst unsafe.Pointer, dw uint32, count int32) {
 		}() = dw
 	}
 }
-func PX_memequ(dst unsafe.Pointer, src unsafe.Pointer, size int32) int32 {
+func PX_memequ(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) PX_bool {
 	var _4byteMovSrc *uint32 = (*uint32)(src)
 	var _4byteMovDst *uint32 = (*uint32)(dst)
 	var psrc *uint8 = (*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(src))) + uintptr(size&-4)))
@@ -598,7 +598,7 @@ func PX_memequ(dst unsafe.Pointer, src unsafe.Pointer, size int32) int32 {
 	}
 	return int32(1)
 }
-func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size int32) {
+func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
 	type _cgoa_15_PX_Typedef struct {
 		m [16]uint8
 	}
@@ -1074,7 +1074,7 @@ func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size int32) {
 		}
 	}
 }
-func PX_strcpy(dst *int8, src *int8, size int32) {
+func PX_strcpy(dst *PX_char, src *PX_char, size PX_int) {
 	for func() (_cgo_ret int32) {
 		_cgo_addr := &size
 		_cgo_ret = *_cgo_addr
@@ -1100,7 +1100,7 @@ func PX_strcpy(dst *int8, src *int8, size int32) {
 	}
 	*(*int8)(unsafe.Pointer(uintptr(unsafe.Pointer(dst)) - uintptr(int32(1)))) = int8('\x00')
 }
-func PX_wstrcpy(dst *uint16, src *uint16, size int32) {
+func PX_wstrcpy(dst *PX_word, src *PX_word, size PX_int) {
 	for func() (_cgo_ret int32) {
 		_cgo_addr := &size
 		_cgo_ret = *_cgo_addr
@@ -1126,7 +1126,7 @@ func PX_wstrcpy(dst *uint16, src *uint16, size int32) {
 	}
 	*(*uint16)(unsafe.Pointer(uintptr(unsafe.Pointer(dst)) - uintptr(int32(1))*2)) = uint16('\x00')
 }
-func PX_strcat(src *int8, cat *int8) {
+func PX_strcat(src *PX_char, cat *PX_char) {
 	var len int32 = PX_strlen(cat)
 	for *src != 0 {
 		*(*uintptr)(unsafe.Pointer(&src))++
@@ -1151,12 +1151,12 @@ func PX_strcat(src *int8, cat *int8) {
 	}
 	*src = int8('\x00')
 }
-func PX_strcat_s(src *int8, size int32, cat *int8) {
+func PX_strcat_s(src *PX_char, size PX_int, cat *PX_char) {
 	if PX_strlen(src)+PX_strlen(cat) < size {
 		PX_strcat(src, cat)
 	}
 }
-func PX_wstrcat(src *uint16, cat *uint16) {
+func PX_wstrcat(src *PX_word, cat *PX_word) {
 	var len int32 = PX_wstrlen(cat)
 	for *src != 0 {
 		*(*uintptr)(unsafe.Pointer(&src)) += 2
@@ -1181,11 +1181,11 @@ func PX_wstrcat(src *uint16, cat *uint16) {
 	}
 	*src = uint16('\x00')
 }
-func PX_strset(dst *int8, src *int8) {
+func PX_strset(dst *PX_char, src *PX_char) {
 	*(*int8)(unsafe.Pointer(uintptr(unsafe.Pointer(dst)) + uintptr(int32(0)))) = int8(0)
 	PX_strcat(dst, src)
 }
-func PX_strlen(dst *int8) int32 {
+func PX_strlen(dst *PX_char) PX_int {
 	var len int32 = int32(0)
 	if !(dst != nil) {
 		PX_ERROR((*int8)(unsafe.Pointer(&[21]int8{'N', 'U', 'L', 'L', ' ', 'p', 'o', 'i', 'n', 't', 'e', 'r', ' ', 'a', 's', 's', 'e', 'r', 't', '!', '\x00'})))
@@ -1200,7 +1200,7 @@ func PX_strlen(dst *int8) int32 {
 	}
 	return len - int32(1)
 }
-func PX_wstrlen(dst *uint16) int32 {
+func PX_wstrlen(dst *PX_word) PX_int {
 	var len int32 = int32(0)
 	if !(dst != nil) {
 		PX_ERROR((*int8)(unsafe.Pointer(&[21]int8{'N', 'U', 'L', 'L', ' ', 'p', 'o', 'i', 'n', 't', 'e', 'r', ' ', 'a', 's', 's', 'e', 'r', 't', '!', '\x00'})))
@@ -1215,7 +1215,7 @@ func PX_wstrlen(dst *uint16) int32 {
 	}
 	return len - int32(1)
 }
-func PX_strequ2(src *int8, dst *int8) int32 {
+func PX_strequ2(src *PX_char, dst *PX_char) PX_bool {
 	var _l int8
 	var _r int8
 	for int32(1) != 0 {
@@ -1239,7 +1239,7 @@ func PX_strequ2(src *int8, dst *int8) int32 {
 	}
 	return int32(0)
 }
-func PX_strupr(src *int8) {
+func PX_strupr(src *PX_char) {
 	for int32(*src) != '\x00' {
 		if int32(*src) >= 'a' && int32(*src) <= 'z' {
 			*src -= int8(32)
@@ -1247,7 +1247,7 @@ func PX_strupr(src *int8) {
 		*(*uintptr)(unsafe.Pointer(&src))++
 	}
 }
-func PX_strlwr(src *int8) {
+func PX_strlwr(src *PX_char) {
 	for int32(*src) != '\x00' {
 		if int32(*src) > 'A' && int32(*src) <= 'Z' {
 			*src += int8(32)
@@ -1255,7 +1255,7 @@ func PX_strlwr(src *int8) {
 		*(*uintptr)(unsafe.Pointer(&src))++
 	}
 }
-func PX_strequ(src *int8, dst *int8) int32 {
+func PX_strequ(src *PX_char, dst *PX_char) PX_bool {
 	var ret int32 = int32(0)
 	for !(func() (_cgo_ret int32) {
 		_cgo_addr := &ret
@@ -1273,7 +1273,7 @@ func PX_strequ(src *int8, dst *int8) int32 {
 		}
 	}()
 }
-func PX_strIsNumeric(str *int8) int32 {
+func PX_strIsNumeric(str *PX_char) PX_bool {
 	var Dot int32 = int32(0)
 	var CurrentCharIndex int32
 	if int32(*(*int8)(unsafe.Pointer(uintptr(unsafe.Pointer(str)) + uintptr(int32(0))))) == '\x00' {
@@ -1303,7 +1303,7 @@ func PX_strIsNumeric(str *int8) int32 {
 	}
 	return int32(1)
 }
-func PX_strIsFloat(str *int8) int32 {
+func PX_strIsFloat(str *PX_char) PX_bool {
 	var Dot int32 = int32(0)
 	var CurrentCharIndex int32
 	if int32(*(*int8)(unsafe.Pointer(uintptr(unsafe.Pointer(str)) + uintptr(int32(0))))) == '\x00' {
@@ -1339,13 +1339,13 @@ func PX_strIsFloat(str *int8) int32 {
 		}
 	}()
 }
-func PX_charIsNumeric(chr int8) int32 {
+func PX_charIsNumeric(chr PX_char) PX_bool {
 	if int32(chr) >= '0' && int32(chr) <= '9' {
 		return int32(1)
 	}
 	return int32(0)
 }
-func PX_strIsInt(str *int8) int32 {
+func PX_strIsInt(str *PX_char) PX_bool {
 	if PX_strIsNumeric(str) != 0 {
 		if PX_strIsFloat(str) != 0 {
 			return int32(0)
@@ -1354,7 +1354,7 @@ func PX_strIsInt(str *int8) int32 {
 	}
 	return int32(0)
 }
-func PX_pow_ii(i int32, n int32) int32 {
+func PX_pow_ii(i PX_int, n PX_int) PX_int {
 	var fin int32 = int32(1)
 	if n == int32(0) {
 		return int32(1)
@@ -1372,7 +1372,7 @@ func PX_pow_ii(i int32, n int32) int32 {
 	}
 	return fin
 }
-func PX_strchr(s *int8, ch int32) *int8 {
+func PX_strchr(s *PX_char, ch PX_int) *PX_char {
 	for int32(*s) != '\x00' {
 		if int32(*s)-ch == int32(0) {
 			return (*int8)(unsafe.Pointer(s))
@@ -1381,7 +1381,7 @@ func PX_strchr(s *int8, ch int32) *int8 {
 	}
 	return (*int8)(nil)
 }
-func PX_strcmp(str1 *int8, str2 *int8) int32 {
+func PX_strcmp(str1 *PX_char, str2 *PX_char) PX_int {
 	var ret int32 = int32(0)
 	for !(func() (_cgo_ret int32) {
 		_cgo_addr := &ret
@@ -1393,7 +1393,7 @@ func PX_strcmp(str1 *int8, str2 *int8) int32 {
 	}
 	return ret
 }
-func PX_strstr(dest *int8, src *int8) *int8 {
+func PX_strstr(dest *PX_char, src *PX_char) *PX_char {
 	var start *int8 = (*int8)(unsafe.Pointer(dest))
 	var substart *int8 = (*int8)(unsafe.Pointer(src))
 	var cp *int8 = (*int8)(unsafe.Pointer(dest))
@@ -1411,7 +1411,7 @@ func PX_strstr(dest *int8, src *int8) *int8 {
 	}
 	return (*int8)(nil)
 }
-func PX_strcut(dest *int8, left int32, right int32) {
+func PX_strcut(dest *PX_char, left PX_int, right PX_int) {
 	var len int32 = PX_strlen(dest)
 	if len == int32(0) {
 		return
@@ -1436,7 +1436,7 @@ func PX_strcut(dest *int8, left int32, right int32) {
 	PX_memcpy(unsafe.Pointer(dest), unsafe.Pointer((*int8)(unsafe.Pointer(uintptr(unsafe.Pointer(dest))+uintptr(left)))), right-left+int32(1))
 	*(*int8)(unsafe.Pointer(uintptr(unsafe.Pointer(dest)) + uintptr(right-left+int32(1)))) = int8(0)
 }
-func PX_htonl(h uint32) uint32 {
+func PX_htonl(h PX_dword) PX_dword {
 	return func() uint32 {
 		if _cgos_PX_isBigEndianCPU_PX_Typedef() != 0 {
 			return h
@@ -1445,7 +1445,7 @@ func PX_htonl(h uint32) uint32 {
 		}
 	}()
 }
-func PX_ntohl(n uint32) uint32 {
+func PX_ntohl(n PX_dword) PX_dword {
 	return func() uint32 {
 		if _cgos_PX_isBigEndianCPU_PX_Typedef() != 0 {
 			return n
@@ -1454,7 +1454,7 @@ func PX_ntohl(n uint32) uint32 {
 		}
 	}()
 }
-func PX_htons(h uint16) uint16 {
+func PX_htons(h PX_dword) PX_word {
 	return uint16(func() int32 {
 		if _cgos_PX_isBigEndianCPU_PX_Typedef() != 0 {
 			return int32(h)
@@ -1463,7 +1463,7 @@ func PX_htons(h uint16) uint16 {
 		}
 	}())
 }
-func PX_ntohs(n uint16) uint16 {
+func PX_ntohs(n PX_dword) PX_word {
 	return uint16(func() int32 {
 		if _cgos_PX_isBigEndianCPU_PX_Typedef() != 0 {
 			return int32(n)

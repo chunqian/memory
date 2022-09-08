@@ -4,6 +4,6 @@ package memory
 
 func PX_ASSERT() {
 }
-func PX_ERROR(fmt *int8) {
+func PX_ERROR(fmt *PX_char) {
 	PX_ASSERT()
 }
