@@ -2,11 +2,11 @@ package memory
 
 import unsafe "unsafe"
 
-func _cgos_PX_isBigEndianCPU_PX_Typedef() PX_bool {
-	type _cgoa_14_PX_Typedef struct {
+func PX_isBigEndianCPU() PX_bool {
+	type _inner_px_isBigEndianCPU struct {
 		i uint32
 	}
-	var c _cgoa_14_PX_Typedef
+	var c _inner_px_isBigEndianCPU
 	c.i = uint32(305419896)
 	return func() int32 {
 		if int32(18) == int32(*(*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(unsafe.Pointer(&*(*[4]uint8)(unsafe.Pointer(&c)))))) + uintptr(int32(0))))) {
@@ -599,64 +599,64 @@ func PX_memequ(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) PX_bool {
 	return int32(1)
 }
 func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
-	type _cgoa_15_PX_Typedef struct {
+	type _px_memcpy_16 struct {
 		m [16]uint8
 	}
-	type PX_MEMCPY_16 = _cgoa_15_PX_Typedef
-	type _cgoa_16_PX_Typedef struct {
+	type PX_MEMCPY_16 = _px_memcpy_16
+	type _px_memcpy_32 struct {
 		m [32]uint8
 	}
-	type PX_MEMCPY_32 = _cgoa_16_PX_Typedef
-	type _cgoa_17_PX_Typedef struct {
+	type PX_MEMCPY_32 = _px_memcpy_32
+	type _px_memcpy_64 struct {
 		m [64]uint8
 	}
-	type PX_MEMCPY_64 = _cgoa_17_PX_Typedef
-	type _cgoa_18_PX_Typedef struct {
+	type PX_MEMCPY_64 = _px_memcpy_64
+	type _px_memcpy_128 struct {
 		m [128]uint8
 	}
-	type PX_MEMCPY_128 = _cgoa_18_PX_Typedef
-	type _cgoa_19_PX_Typedef struct {
+	type PX_MEMCPY_128 = _px_memcpy_128
+	type _px_memcpy_256 struct {
 		m [256]uint8
 	}
-	type PX_MEMCPY_256 = _cgoa_19_PX_Typedef
-	type _cgoa_20_PX_Typedef struct {
+	type PX_MEMCPY_256 = _px_memcpy_256
+	type _px_memcpy_512 struct {
 		m [512]uint8
 	}
-	type PX_MEMCPY_512 = _cgoa_20_PX_Typedef
-	type _cgoa_21_PX_Typedef struct {
+	type PX_MEMCPY_512 = _px_memcpy_512
+	type _px_memcpy_1024 struct {
 		m [1024]uint8
 	}
-	type PX_MEMCPY_1024 = _cgoa_21_PX_Typedef
-	type _cgoa_22_PX_Typedef struct {
+	type PX_MEMCPY_1024 = _px_memcpy_1024
+	type _px_memcpy_2048 struct {
 		m [2048]uint8
 	}
-	type PX_MEMCPY_2048 = _cgoa_22_PX_Typedef
-	type _cgoa_23_PX_Typedef struct {
+	type PX_MEMCPY_2048 = _px_memcpy_2048
+	type _px_memcpy_4096 struct {
 		m [4096]uint8
 	}
-	type PX_MEMCPY_4096 = _cgoa_23_PX_Typedef
+	type PX_MEMCPY_4096 = _px_memcpy_4096
 	var _4byteMovSrc *uint32
 	var _4byteMovDst *uint32
 	var psrc *uint8
 	var pdst *uint8
-	var _4kbyteMovSrc *_cgoa_23_PX_Typedef
-	var _4kbyteMovDst *_cgoa_23_PX_Typedef
-	var _2kbyteMovSrc *_cgoa_22_PX_Typedef
-	var _2kbyteMovDst *_cgoa_22_PX_Typedef
-	var _1kbyteMovSrc *_cgoa_21_PX_Typedef
-	var _1kbyteMovDst *_cgoa_21_PX_Typedef
-	var _512byteMovSrc *_cgoa_20_PX_Typedef
-	var _512byteMovDst *_cgoa_20_PX_Typedef
-	var _256byteMovSrc *_cgoa_19_PX_Typedef
-	var _256byteMovDst *_cgoa_19_PX_Typedef
-	var _128byteMovSrc *_cgoa_18_PX_Typedef
-	var _128byteMovDst *_cgoa_18_PX_Typedef
-	var _64byteMovSrc *_cgoa_17_PX_Typedef
-	var _64byteMovDst *_cgoa_17_PX_Typedef
-	var _32byteMovSrc *_cgoa_16_PX_Typedef
-	var _32byteMovDst *_cgoa_16_PX_Typedef
-	var _16byteMovSrc *_cgoa_15_PX_Typedef
-	var _16byteMovDst *_cgoa_15_PX_Typedef
+	var _4kbyteMovSrc *_px_memcpy_4096
+	var _4kbyteMovDst *_px_memcpy_4096
+	var _2kbyteMovSrc *_px_memcpy_2048
+	var _2kbyteMovDst *_px_memcpy_2048
+	var _1kbyteMovSrc *_px_memcpy_1024
+	var _1kbyteMovDst *_px_memcpy_1024
+	var _512byteMovSrc *_px_memcpy_512
+	var _512byteMovDst *_px_memcpy_512
+	var _256byteMovSrc *_px_memcpy_256
+	var _256byteMovDst *_px_memcpy_256
+	var _128byteMovSrc *_px_memcpy_128
+	var _128byteMovDst *_px_memcpy_128
+	var _64byteMovSrc *_px_memcpy_64
+	var _64byteMovDst *_px_memcpy_64
+	var _32byteMovSrc *_px_memcpy_32
+	var _32byteMovDst *_px_memcpy_32
+	var _16byteMovSrc *_px_memcpy_16
+	var _16byteMovDst *_px_memcpy_16
 	var _movTs uint32
 	if size <= int32(0) {
 		return
@@ -744,20 +744,20 @@ func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
 	} else {
 		_movTs = uint32(size >> int32(12))
 		if _movTs != 0 {
-			_4kbyteMovSrc = (*_cgoa_23_PX_Typedef)(src)
-			_4kbyteMovDst = (*_cgoa_23_PX_Typedef)(dst)
+			_4kbyteMovSrc = (*_px_memcpy_4096)(src)
+			_4kbyteMovDst = (*_px_memcpy_4096)(dst)
 			for func() (_cgo_ret uint32) {
 				_cgo_addr := &_movTs
 				_cgo_ret = *_cgo_addr
 				*_cgo_addr--
 				return
 			}() != 0 {
-				*func() (_cgo_ret *_cgoa_23_PX_Typedef) {
+				*func() (_cgo_ret *_px_memcpy_4096) {
 					_cgo_addr := &_4kbyteMovDst
 					_cgo_ret = *_cgo_addr
 					*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 4096
 					return
-				}() = *func() (_cgo_ret *_cgoa_23_PX_Typedef) {
+				}() = *func() (_cgo_ret *_px_memcpy_4096) {
 					_cgo_addr := &_4kbyteMovSrc
 					_cgo_ret = *_cgo_addr
 					*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 4096
@@ -769,14 +769,14 @@ func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
 		}
 		_movTs = uint32(size & 2048)
 		if _movTs != 0 {
-			_2kbyteMovSrc = (*_cgoa_22_PX_Typedef)(src)
-			_2kbyteMovDst = (*_cgoa_22_PX_Typedef)(dst)
-			*func() (_cgo_ret *_cgoa_22_PX_Typedef) {
+			_2kbyteMovSrc = (*_px_memcpy_2048)(src)
+			_2kbyteMovDst = (*_px_memcpy_2048)(dst)
+			*func() (_cgo_ret *_px_memcpy_2048) {
 				_cgo_addr := &_2kbyteMovDst
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 2048
 				return
-			}() = *func() (_cgo_ret *_cgoa_22_PX_Typedef) {
+			}() = *func() (_cgo_ret *_px_memcpy_2048) {
 				_cgo_addr := &_2kbyteMovSrc
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 2048
@@ -787,14 +787,14 @@ func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
 		}
 		_movTs = uint32(size & 1024)
 		if _movTs != 0 {
-			_1kbyteMovSrc = (*_cgoa_21_PX_Typedef)(src)
-			_1kbyteMovDst = (*_cgoa_21_PX_Typedef)(dst)
-			*func() (_cgo_ret *_cgoa_21_PX_Typedef) {
+			_1kbyteMovSrc = (*_px_memcpy_1024)(src)
+			_1kbyteMovDst = (*_px_memcpy_1024)(dst)
+			*func() (_cgo_ret *_px_memcpy_1024) {
 				_cgo_addr := &_1kbyteMovDst
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 1024
 				return
-			}() = *func() (_cgo_ret *_cgoa_21_PX_Typedef) {
+			}() = *func() (_cgo_ret *_px_memcpy_1024) {
 				_cgo_addr := &_1kbyteMovSrc
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 1024
@@ -805,14 +805,14 @@ func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
 		}
 		_movTs = uint32(size & 512)
 		if _movTs != 0 {
-			_512byteMovSrc = (*_cgoa_20_PX_Typedef)(src)
-			_512byteMovDst = (*_cgoa_20_PX_Typedef)(dst)
-			*func() (_cgo_ret *_cgoa_20_PX_Typedef) {
+			_512byteMovSrc = (*_px_memcpy_512)(src)
+			_512byteMovDst = (*_px_memcpy_512)(dst)
+			*func() (_cgo_ret *_px_memcpy_512) {
 				_cgo_addr := &_512byteMovDst
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 512
 				return
-			}() = *func() (_cgo_ret *_cgoa_20_PX_Typedef) {
+			}() = *func() (_cgo_ret *_px_memcpy_512) {
 				_cgo_addr := &_512byteMovSrc
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 512
@@ -823,14 +823,14 @@ func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
 		}
 		_movTs = uint32(size & 256)
 		if _movTs != 0 {
-			_256byteMovSrc = (*_cgoa_19_PX_Typedef)(src)
-			_256byteMovDst = (*_cgoa_19_PX_Typedef)(dst)
-			*func() (_cgo_ret *_cgoa_19_PX_Typedef) {
+			_256byteMovSrc = (*_px_memcpy_256)(src)
+			_256byteMovDst = (*_px_memcpy_256)(dst)
+			*func() (_cgo_ret *_px_memcpy_256) {
 				_cgo_addr := &_256byteMovDst
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 256
 				return
-			}() = *func() (_cgo_ret *_cgoa_19_PX_Typedef) {
+			}() = *func() (_cgo_ret *_px_memcpy_256) {
 				_cgo_addr := &_256byteMovSrc
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 256
@@ -841,14 +841,14 @@ func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
 		}
 		_movTs = uint32(size & 128)
 		if _movTs != 0 {
-			_128byteMovSrc = (*_cgoa_18_PX_Typedef)(src)
-			_128byteMovDst = (*_cgoa_18_PX_Typedef)(dst)
-			*func() (_cgo_ret *_cgoa_18_PX_Typedef) {
+			_128byteMovSrc = (*_px_memcpy_128)(src)
+			_128byteMovDst = (*_px_memcpy_128)(dst)
+			*func() (_cgo_ret *_px_memcpy_128) {
 				_cgo_addr := &_128byteMovDst
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 128
 				return
-			}() = *func() (_cgo_ret *_cgoa_18_PX_Typedef) {
+			}() = *func() (_cgo_ret *_px_memcpy_128) {
 				_cgo_addr := &_128byteMovSrc
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 128
@@ -859,14 +859,14 @@ func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
 		}
 		_movTs = uint32(size & 64)
 		if _movTs != 0 {
-			_64byteMovSrc = (*_cgoa_17_PX_Typedef)(src)
-			_64byteMovDst = (*_cgoa_17_PX_Typedef)(dst)
-			*func() (_cgo_ret *_cgoa_17_PX_Typedef) {
+			_64byteMovSrc = (*_px_memcpy_64)(src)
+			_64byteMovDst = (*_px_memcpy_64)(dst)
+			*func() (_cgo_ret *_px_memcpy_64) {
 				_cgo_addr := &_64byteMovDst
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 64
 				return
-			}() = *func() (_cgo_ret *_cgoa_17_PX_Typedef) {
+			}() = *func() (_cgo_ret *_px_memcpy_64) {
 				_cgo_addr := &_64byteMovSrc
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 64
@@ -877,14 +877,14 @@ func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
 		}
 		_movTs = uint32(size & 32)
 		if _movTs != 0 {
-			_32byteMovSrc = (*_cgoa_16_PX_Typedef)(src)
-			_32byteMovDst = (*_cgoa_16_PX_Typedef)(dst)
-			*func() (_cgo_ret *_cgoa_16_PX_Typedef) {
+			_32byteMovSrc = (*_px_memcpy_32)(src)
+			_32byteMovDst = (*_px_memcpy_32)(dst)
+			*func() (_cgo_ret *_px_memcpy_32) {
 				_cgo_addr := &_32byteMovDst
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 32
 				return
-			}() = *func() (_cgo_ret *_cgoa_16_PX_Typedef) {
+			}() = *func() (_cgo_ret *_px_memcpy_32) {
 				_cgo_addr := &_32byteMovSrc
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 32
@@ -895,14 +895,14 @@ func PX_memcpy(dst unsafe.Pointer, src unsafe.Pointer, size PX_int) {
 		}
 		_movTs = uint32(size & 16)
 		if _movTs != 0 {
-			_16byteMovSrc = (*_cgoa_15_PX_Typedef)(src)
-			_16byteMovDst = (*_cgoa_15_PX_Typedef)(dst)
-			*func() (_cgo_ret *_cgoa_15_PX_Typedef) {
+			_16byteMovSrc = (*_px_memcpy_16)(src)
+			_16byteMovDst = (*_px_memcpy_16)(dst)
+			*func() (_cgo_ret *_px_memcpy_16) {
 				_cgo_addr := &_16byteMovDst
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 16
 				return
-			}() = *func() (_cgo_ret *_cgoa_15_PX_Typedef) {
+			}() = *func() (_cgo_ret *_px_memcpy_16) {
 				_cgo_addr := &_16byteMovSrc
 				_cgo_ret = *_cgo_addr
 				*(*uintptr)(unsafe.Pointer(_cgo_addr)) += 16
@@ -1438,7 +1438,7 @@ func PX_strcut(dest *PX_char, left PX_int, right PX_int) {
 }
 func PX_htonl(h PX_dword) PX_dword {
 	return func() uint32 {
-		if _cgos_PX_isBigEndianCPU_PX_Typedef() != 0 {
+		if PX_isBigEndianCPU() != 0 {
 			return h
 		} else {
 			return uint32(h)&uint32(4278190080)>>int32(24) | uint32(h)&uint32(16711680)>>int32(8) | uint32(h)&uint32(65280)<<int32(8) | uint32(h)&uint32(255)<<int32(24)
@@ -1447,7 +1447,7 @@ func PX_htonl(h PX_dword) PX_dword {
 }
 func PX_ntohl(n PX_dword) PX_dword {
 	return func() uint32 {
-		if _cgos_PX_isBigEndianCPU_PX_Typedef() != 0 {
+		if PX_isBigEndianCPU() != 0 {
 			return n
 		} else {
 			return uint32(n)&uint32(4278190080)>>int32(24) | uint32(n)&uint32(16711680)>>int32(8) | uint32(n)&uint32(65280)<<int32(8) | uint32(n)&uint32(255)<<int32(24)
@@ -1456,7 +1456,7 @@ func PX_ntohl(n PX_dword) PX_dword {
 }
 func PX_htons(h PX_dword) PX_word {
 	return uint16(func() int32 {
-		if _cgos_PX_isBigEndianCPU_PX_Typedef() != 0 {
+		if PX_isBigEndianCPU() != 0 {
 			return int32(h)
 		} else {
 			return int32(uint16(h))&int32(65280)>>int32(8) | int32(uint16(h))&int32(255)<<int32(8)
@@ -1465,7 +1465,7 @@ func PX_htons(h PX_dword) PX_word {
 }
 func PX_ntohs(n PX_dword) PX_word {
 	return uint16(func() int32 {
-		if _cgos_PX_isBigEndianCPU_PX_Typedef() != 0 {
+		if PX_isBigEndianCPU() != 0 {
 			return int32(n)
 		} else {
 			return int32(uint16(n))&int32(65280)>>int32(8) | int32(uint16(n))&int32(255)<<int32(8)
