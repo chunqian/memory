@@ -41,8 +41,6 @@ const (
 )
 
 type _inner_px_stringformat struct {
-	_int PX_int
-	_float PX_float
 	_pstring *PX_char
 }
 type _px_stringformat struct {
