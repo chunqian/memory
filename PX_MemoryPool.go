@@ -2,36 +2,38 @@ package memory
 
 import unsafe "unsafe"
 
-type _memoryNode struct {
+type PX_memoryNode struct {
 	StartAddr unsafe.Pointer
 	EndAddr   unsafe.Pointer
 }
-type MemoryNode = _memoryNode
 
-func PX_MemoryPool_GetFreeTableAddr(MP *PX_memorypool) *MemoryNode {
-	return (*_memoryNode)(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(MP.EndAddr)))-uintptr(16*uint64(MP.FreeTableCount)))))) + uintptr(int32(1))))))
+func PX_MemoryPool_GetFreeTableAddr(MP *PX_memorypool) *PX_memoryNode {
+	return (*PX_memoryNode)(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(MP.EndAddr)))-uintptr(16*uint64(MP.FreeTableCount)))))) + uintptr(int32(1))))))
 }
-func PX_MemoryPool_GetFreeTable(MP *PX_memorypool, Index PX_uint) *MemoryNode {
+
+func PX_MemoryPool_GetFreeTable(MP *PX_memorypool, Index PX_uint) *PX_memoryNode {
 	Index++
-	return (*_memoryNode)(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(MP.EndAddr)))-uintptr(16*uint64(Index)))))) + uintptr(int32(1))))))
+	return (*PX_memoryNode)(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(MP.EndAddr)))-uintptr(16*uint64(Index)))))) + uintptr(int32(1))))))
 }
-func PX_AllocFromFree(MP *PX_memorypool, Size PX_uint) *MemoryNode {
-	var Node *_memoryNode
+
+func PX_AllocFromFree(MP *PX_memorypool, Size PX_uint) *PX_memoryNode {
+	var Node *PX_memoryNode
 	if uint64(Size)+32 > uint64(MP.FreeSize) {
-		return (*_memoryNode)(nil)
+		return (*PX_memoryNode)(nil)
 	}
-	Node = (*_memoryNode)(MP.AllocAddr)
+	Node = (*PX_memoryNode)(MP.AllocAddr)
 	(*Node).StartAddr = unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(MP.AllocAddr))) + uintptr(16))))
 	(*Node).EndAddr = unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(Node.StartAddr)))+uintptr(Size))))) - uintptr(int32(1)))))
 	MP.FreeSize -= uint32(uint64(Size) + 32)
 	MP.AllocAddr = unsafe.Pointer((*int8)(unsafe.Pointer(uintptr(unsafe.Pointer((*int8)(unsafe.Pointer(uintptr(unsafe.Pointer((*int8)(MP.AllocAddr)))+uintptr(Size))))) + uintptr(16))))
 	return Node
 }
+
 func PX_MemoryPoolRemoveFreeNode(MP *PX_memorypool, Index PX_uint) {
 	var i uint32
-	var pFreeNode *_memoryNode = PX_MemoryPool_GetFreeTable(MP, Index)
+	var pFreeNode *PX_memoryNode = PX_MemoryPool_GetFreeTable(MP, Index)
 	for i = Index; i < MP.FreeTableCount; i++ {
-		*pFreeNode = *(*_memoryNode)(unsafe.Pointer(uintptr(unsafe.Pointer(pFreeNode)) - uintptr(int32(1))*16))
+		*pFreeNode = *(*PX_memoryNode)(unsafe.Pointer(uintptr(unsafe.Pointer(pFreeNode)) - uintptr(int32(1))*16))
 		*(*uintptr)(unsafe.Pointer(&pFreeNode)) -= 16
 	}
 	MP.FreeTableCount--
@@ -39,12 +41,14 @@ func PX_MemoryPoolRemoveFreeNode(MP *PX_memorypool, Index PX_uint) {
 		MP.MaxMemoryfragSize = uint32(0)
 	}
 }
-func PX_AllocFreeMemoryNode(MP *PX_memorypool) *MemoryNode {
+
+func PX_AllocFreeMemoryNode(MP *PX_memorypool) *PX_memoryNode {
 	MP.FreeTableCount++
 	return PX_MemoryPool_GetFreeTable(MP, MP.FreeTableCount-uint32(1))
 }
+
 func PX_UpdateMaxFreqSize(MP *PX_memorypool) {
-	var itNode *_memoryNode
+	var itNode *PX_memoryNode
 	var i uint32
 	var Size uint32
 	MP.MaxMemoryfragSize = uint32(0)
@@ -59,18 +63,19 @@ func PX_UpdateMaxFreqSize(MP *PX_memorypool) {
 		}
 	}
 }
-func PX_AllocFromFreq(MP *PX_memorypool, Size PX_uint) *MemoryNode {
+
+func PX_AllocFromFreq(MP *PX_memorypool, Size PX_uint) *PX_memoryNode {
 	var i uint32
 	var fSize uint32
-	var itNode *_memoryNode
-	var allocNode *_memoryNode
+	var itNode *PX_memoryNode
+	var allocNode *PX_memoryNode
 	Size += uint32(16)
 	if MP.MaxMemoryfragSize >= Size {
 		for i = uint32(0); i < MP.FreeTableCount; i++ {
 			itNode = PX_MemoryPool_GetFreeTable(MP, i)
 			fSize = uint32(uintptr(unsafe.Pointer((*int8)(itNode.EndAddr))) - uintptr(unsafe.Pointer((*int8)(itNode.StartAddr))) + uintptr(int64(1)))
 			if Size <= fSize && uint64(Size)+16 >= uint64(fSize) {
-				allocNode = (*_memoryNode)(itNode.StartAddr)
+				allocNode = (*PX_memoryNode)(itNode.StartAddr)
 				allocNode.StartAddr = unsafe.Pointer((*int8)(unsafe.Pointer(uintptr(unsafe.Pointer((*int8)(itNode.StartAddr))) + uintptr(16))))
 				allocNode.EndAddr = itNode.EndAddr
 				PX_MemoryPoolRemoveFreeNode(MP, i)
@@ -78,9 +83,9 @@ func PX_AllocFromFreq(MP *PX_memorypool, Size PX_uint) *MemoryNode {
 				return allocNode
 			} else if Size < fSize {
 				if uint64(MP.FreeSize) < 16 {
-					return (*_memoryNode)(nil)
+					return (*PX_memoryNode)(nil)
 				}
-				allocNode = (*_memoryNode)(itNode.StartAddr)
+				allocNode = (*PX_memoryNode)(itNode.StartAddr)
 				allocNode.StartAddr = unsafe.Pointer((*int8)(unsafe.Pointer(uintptr(unsafe.Pointer((*int8)(itNode.StartAddr))) + uintptr(16))))
 				allocNode.EndAddr = unsafe.Pointer((*int8)(unsafe.Pointer(uintptr(unsafe.Pointer((*int8)(unsafe.Pointer(uintptr(unsafe.Pointer((*int8)(itNode.StartAddr)))+uintptr(Size))))) - uintptr(int32(1)))))
 				itNode.StartAddr = unsafe.Pointer((*int8)(unsafe.Pointer(uintptr(unsafe.Pointer((*int8)(allocNode.EndAddr))) + uintptr(int32(1)))))
@@ -89,15 +94,16 @@ func PX_AllocFromFreq(MP *PX_memorypool, Size PX_uint) *MemoryNode {
 				return allocNode
 			}
 		}
-		return (*_memoryNode)(nil)
+		return (*PX_memoryNode)(nil)
 	} else {
-		return (*_memoryNode)(nil)
+		return (*PX_memoryNode)(nil)
 	}
 	return nil
 }
+
 func MP_Create(MemoryAddr unsafe.Pointer, MemorySize PX_uint) PX_memorypool {
 	var Index uint32 = uint32(0)
-	var MP _memoryPool
+	var MP PX_memorypool
 	PX_memset(unsafe.Pointer(&MP), uint8(0), int32(56))
 	if MemorySize == uint32(0) {
 		return MP
@@ -122,8 +128,9 @@ func MP_Create(MemoryAddr unsafe.Pointer, MemorySize PX_uint) PX_memorypool {
 	}()
 	return MP
 }
+
 func MP_Malloc(MP *PX_memorypool, Size PX_uint) unsafe.Pointer {
-	var MemNode *_memoryNode
+	var MemNode *PX_memoryNode
 	if Size == uint32(0) {
 		return unsafe.Pointer(nil)
 	}
@@ -151,20 +158,21 @@ func MP_Malloc(MP *PX_memorypool, Size PX_uint) unsafe.Pointer {
 	}
 	return unsafe.Pointer(nil)
 }
+
 func MP_Free(MP *PX_memorypool, pAddress unsafe.Pointer) {
 	var i uint32
 	var sIndex uint32
-	var itNode *_memoryNode
-	var FreeNode _memoryNode
+	var itNode *PX_memoryNode
+	var FreeNode PX_memoryNode
 	var pcTempStart *uint8
 	var pcTempEnd *uint8
 	var bExist uint8
 	var TempPointer unsafe.Pointer
-	var TempNode *_memoryNode
+	var TempNode *PX_memoryNode
 	MP.nodeCount--
 	bExist = uint8(0)
 	TempPointer = unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(pAddress))) - uintptr(16))))
-	TempNode = (*_memoryNode)(TempPointer)
+	TempNode = (*PX_memoryNode)(TempPointer)
 	FreeNode.StartAddr = TempNode.StartAddr
 	FreeNode.EndAddr = TempNode.EndAddr
 	FreeNode.StartAddr = unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(FreeNode.StartAddr))) - uintptr(16))))
@@ -222,22 +230,26 @@ _END:
 	PX_UpdateMaxFreqSize(MP)
 	return
 }
+
 func MP_Release(Node *PX_memorypool) {
 }
+
 func MP_ErrorCatch(Pool *PX_memorypool, ErrorCall func(PX_MEMORYPOOL_ERROR)) {
 	Pool.ErrorCall_Ptr = ErrorCall
 }
+
 func MP_Size(Pool *PX_memorypool, pAddress unsafe.Pointer) PX_uint {
 	var TempPointer unsafe.Pointer
-	var TempNode *_memoryNode
+	var TempNode *PX_memoryNode
 	if uintptr(unsafe.Pointer(pAddress)) == uintptr(unsafe.Pointer(nil)) {
 		PX_ASSERT()
 		return uint32(0)
 	}
 	TempPointer = unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(pAddress))) - uintptr(16))))
-	TempNode = (*_memoryNode)(TempPointer)
+	TempNode = (*PX_memoryNode)(TempPointer)
 	return uint32(uintptr(unsafe.Pointer((*int8)(TempNode.EndAddr)))-uintptr(unsafe.Pointer((*int8)(TempNode.StartAddr)))) + uint32(1)
 }
+
 func MP_Reset(Pool *PX_memorypool) {
 	Pool.AllocAddr = Pool.StartAddr
 	Pool.EndAddr = unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer((*uint8)(Pool.StartAddr)))+uintptr(Pool.Size))))) - uintptr(int32(1)))))
