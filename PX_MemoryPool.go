@@ -1,6 +1,6 @@
 package memory
 
-import unsafe "unsafe"
+import "unsafe"
 
 type PX_memoryNode struct {
 	startAddr unsafe.Pointer

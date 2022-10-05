@@ -1,6 +1,14 @@
 package memory
 
-import unsafe "unsafe"
+import "unsafe"
+
+func (format *PX_stringformat) pstring() *PX_char {
+	return format.value
+}
+
+func (format *PX_stringformat) set_pstring(_s *PX_char) {
+	format.value = _s
+}
 
 func PX_isBigEndianCPU() PX_bool {
 	type _inner_px_isBigEndianCPU struct {
@@ -108,7 +116,7 @@ func PX_atof(fstr *PX_char) PX_float {
 	} else {
 		return float32(ans) * float32(-1)
 	}
-	return 0
+	// return 0
 }
 
 func PX_ftos(f PX_float, precision PX_int) PX_RETURN_STRING {
@@ -327,7 +335,7 @@ func PX_STRINGFORMAT_FLOAT(_f PX_float) PX_stringformat {
 func PX_STRINGFORMAT_STRING(_s *PX_char) PX_stringformat {
 	var fmt PX_stringformat
 	fmt.type_ = int32(2)
-	fmt.value._pstring = _s
+	fmt.set_pstring(_s)
 	return fmt
 }
 
@@ -388,7 +396,7 @@ func PX_sprintf8(_out_str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringf
 				length += PX_strlen((*int8)(unsafe.Pointer(&(&tret).data)))
 				break
 			case uint32(2):
-				length += PX_strlen(pstringfmt.value._pstring)
+				length += PX_strlen(pstringfmt.pstring())
 				break
 			default:
 				return int32(0)
@@ -465,9 +473,9 @@ func PX_sprintf8(_out_str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringf
 			}
 			break
 		case uint32(2):
-			if length+PX_strlen(pstringfmt.value._pstring) < str_size {
-				PX_strcat(_out_str, pstringfmt.value._pstring)
-				length += PX_strlen(pstringfmt.value._pstring)
+			if length+PX_strlen(pstringfmt.pstring()) < str_size {
+				PX_strcat(_out_str, pstringfmt.pstring())
+				length += PX_strlen(pstringfmt.pstring())
 			} else {
 				return length
 			}

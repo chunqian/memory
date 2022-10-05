@@ -1,8 +1,9 @@
 package memory
 
-import unsafe "unsafe"
+import "unsafe"
 
-var px_hex_to_dex_table [103]int32 = [103]int32{0, 0, 0, 0, 0, 0, 0, 0, 0,
+var px_hex_to_dex_table [103]int32 = [103]int32{
+	0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -64,13 +65,9 @@ type PX_RETURN_STRING struct {
 	data [64]PX_char
 }
 
-type _innerPX_stringformat struct {
-	_pstring *PX_char
-}
-
 type PX_stringformat struct {
 	type_ PX_STRINGFORMAT_TYPE
-	value _innerPX_stringformat
+	value *PX_char
 }
 
 type PX_memorypool struct {

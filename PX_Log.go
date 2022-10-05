@@ -1,6 +1,6 @@
 package memory
 
-// import unsafe "unsafe"
+// import "unsafe"
 
 func PX_ASSERT() {
 }

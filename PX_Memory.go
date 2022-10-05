@@ -1,6 +1,6 @@
 package memory
 
-import unsafe "unsafe"
+import "unsafe"
 
 func PX_MemoryInitialize(mp *PX_memorypool, memory *PX_memory) {
 	memory.buffer = (*uint8)(nil)
