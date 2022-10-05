@@ -313,21 +313,21 @@ func PX_HexStringToBuffer(hex_str *PX_char, data *PX_byte) PX_int {
 func PX_STRINGFORMAT_INT(_i PX_int) PX_stringformat {
 	var fmt PX_stringformat
 	fmt.type_ = int32(0)
-	*(*int32)(unsafe.Pointer(&fmt._innerPX_stringformat)) = _i
+	*(*int32)(unsafe.Pointer(&fmt.value)) = _i
 	return fmt
 }
 
 func PX_STRINGFORMAT_FLOAT(_f PX_float) PX_stringformat {
 	var fmt PX_stringformat
 	fmt.type_ = int32(1)
-	*(*float32)(unsafe.Pointer(&fmt._innerPX_stringformat)) = _f
+	*(*float32)(unsafe.Pointer(&fmt.value)) = _f
 	return fmt
 }
 
 func PX_STRINGFORMAT_STRING(_s *PX_char) PX_stringformat {
 	var fmt PX_stringformat
 	fmt.type_ = int32(2)
-	fmt._pstring = _s
+	fmt.value._pstring = _s
 	return fmt
 }
 
@@ -380,15 +380,15 @@ func PX_sprintf8(_out_str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringf
 			}
 			switch uint32(pstringfmt.type_) {
 			case uint32(0):
-				tret = PX_itos(*(*int32)(unsafe.Pointer(&pstringfmt._innerPX_stringformat)), int32(10))
+				tret = PX_itos(*(*int32)(unsafe.Pointer(&pstringfmt.value)), int32(10))
 				length += PX_strlen((*int8)(unsafe.Pointer(&(&tret).data)))
 				break
 			case uint32(1):
-				tret = PX_ftos(*(*float32)(unsafe.Pointer(&pstringfmt._innerPX_stringformat)), precision)
+				tret = PX_ftos(*(*float32)(unsafe.Pointer(&pstringfmt.value)), precision)
 				length += PX_strlen((*int8)(unsafe.Pointer(&(&tret).data)))
 				break
 			case uint32(2):
-				length += PX_strlen(pstringfmt._pstring)
+				length += PX_strlen(pstringfmt.value._pstring)
 				break
 			default:
 				return int32(0)
@@ -447,7 +447,7 @@ func PX_sprintf8(_out_str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringf
 		}
 		switch uint32(pstringfmt.type_) {
 		case uint32(0):
-			tret = PX_itos(*(*int32)(unsafe.Pointer(&pstringfmt._innerPX_stringformat)), int32(10))
+			tret = PX_itos(*(*int32)(unsafe.Pointer(&pstringfmt.value)), int32(10))
 			if length+PX_strlen((*int8)(unsafe.Pointer(&tret.data))) < str_size {
 				PX_strcat(_out_str, (*int8)(unsafe.Pointer(&tret.data)))
 				length += PX_strlen((*int8)(unsafe.Pointer(&tret.data)))
@@ -456,7 +456,7 @@ func PX_sprintf8(_out_str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringf
 			}
 			break
 		case uint32(1):
-			tret = PX_ftos(*(*float32)(unsafe.Pointer(&pstringfmt._innerPX_stringformat)), precision)
+			tret = PX_ftos(*(*float32)(unsafe.Pointer(&pstringfmt.value)), precision)
 			if length+PX_strlen((*int8)(unsafe.Pointer(&tret.data))) < str_size {
 				PX_strcat(_out_str, (*int8)(unsafe.Pointer(&tret.data)))
 				length += PX_strlen((*int8)(unsafe.Pointer(&tret.data)))
@@ -465,9 +465,9 @@ func PX_sprintf8(_out_str *PX_char, str_size PX_int, fmt *PX_char, _1 PX_stringf
 			}
 			break
 		case uint32(2):
-			if length+PX_strlen(pstringfmt._pstring) < str_size {
-				PX_strcat(_out_str, pstringfmt._pstring)
-				length += PX_strlen(pstringfmt._pstring)
+			if length+PX_strlen(pstringfmt.value._pstring) < str_size {
+				PX_strcat(_out_str, pstringfmt.value._pstring)
+				length += PX_strlen(pstringfmt.value._pstring)
 			} else {
 				return length
 			}

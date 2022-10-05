@@ -70,19 +70,19 @@ type _innerPX_stringformat struct {
 
 type PX_stringformat struct {
 	type_ PX_STRINGFORMAT_TYPE
-	_innerPX_stringformat
+	value _innerPX_stringformat
 }
 
 type PX_memorypool struct {
-	AllocAddr         unsafe.Pointer
-	StartAddr         unsafe.Pointer
-	EndAddr           unsafe.Pointer
-	Size              PX_uint32
-	FreeSize          PX_uint32
+	allocAddr         unsafe.Pointer
+	startAddr         unsafe.Pointer
+	endAddr           unsafe.Pointer
+	size              PX_uint32
+	freeSize          PX_uint32
 	nodeCount         PX_uint32
-	FreeTableCount    PX_uint32
-	MaxMemoryfragSize PX_uint32
-	ErrorCall_Ptr     func(PX_MEMORYPOOL_ERROR)
+	freeTableCount    PX_uint32
+	maxMemoryfragSize PX_uint32
+	errorCallPtr      func(PX_MEMORYPOOL_ERROR)
 }
 
 type PX_memory struct {
