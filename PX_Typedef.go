@@ -2,12 +2,16 @@ package memory
 
 import "unsafe"
 
-func (format *PX_stringformat) pstring() *PX_char {
-	return format.value
+func (format *PX_stringformat) pint() PX_int {
+	return *(*PX_int)(unsafe.Pointer(&format.value))
 }
 
-func (format *PX_stringformat) set_pstring(_s *PX_char) {
-	format.value = _s
+func (format *PX_stringformat) pfloat() PX_float {
+	return *(*PX_float)(unsafe.Pointer(&format.value))
+}
+
+func (format *PX_stringformat) pstring() *PX_char {
+	return *(**PX_char)(unsafe.Pointer(&format.value))
 }
 
 func PX_isBigEndianCPU() PX_bool {
@@ -335,7 +339,7 @@ func PX_STRINGFORMAT_FLOAT(_f PX_float) PX_stringformat {
 func PX_STRINGFORMAT_STRING(_s *PX_char) PX_stringformat {
 	var fmt PX_stringformat
 	fmt.type_ = int32(2)
-	fmt.set_pstring(_s)
+	*(**PX_char)(unsafe.Pointer(&fmt.value)) = _s
 	return fmt
 }
 

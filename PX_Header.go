@@ -67,7 +67,7 @@ type PX_RETURN_STRING struct {
 
 type PX_stringformat struct {
 	type_ PX_STRINGFORMAT_TYPE
-	value *PX_char
+	value [8]PX_char
 }
 
 type PX_memorypool struct {
